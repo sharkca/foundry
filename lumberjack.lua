@@ -1,20 +1,52 @@
-function detectLog () 
-    print("> Detected Log in Front")
+function trim (direction) 
+
+    if direction == "forward" then
+
+        turtle.dig()
+
+        print("> Trimmed Leaves in Front")
+
+    elseif direction == "up" then
+
+        turtle.digUp()
+
+        print("> Trimmed Leaves Above")
+
+    elseif direction == "down" then
+
+        turtle.digDown()
+
+        print("> Trimmed Leaves Below")
+    end
+
 end
 
-function detectLeaves () 
-    print("> Detected Leaves in Above")
-end
+function traverse (direction)
 
-function trim () 
-    print("> Trimmed Leaves Above")
-end
+    if direction == "forward" then
 
-function traverse ()
-    print("> Moved Up")
-end
+        turtle.forward()
 
-function traverse ()
+        print("> Moved Forward")
+
+    elseif direction == "back" then 
+        
+        turtle.back()
+
+        print("> Moved Back")
+
+    elseif direction == "up" then
+
+        turtle.up()
+
+        print("> Moved Up")
+
+    elseif direction == "down" then
+
+        turtle.down()
+
+        print("> Moved Down")
+    end
 
 end
 
