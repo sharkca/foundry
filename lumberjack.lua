@@ -1,3 +1,109 @@
+function detectLog (direction) 
+
+    local blockInfo = ""
+
+    if direction == "front" then
+
+        blockInfo = turtle.inspect()
+
+        print("> Inspected Block in Front")
+
+    elseif direction == "up" then
+
+        blockInfo = turtle.inspectUp()
+
+        print("> Inspected Block Above")
+
+    elseif direction == "down" then
+
+        blockInfo = turtle.inspectDown()
+
+        print("> Inspected Block Below")
+
+    end
+
+    if blockInfo.name == "minecraft:log" then 
+
+        print("> Detected Log")
+
+        return true
+
+    else
+
+        print("> Did Not Detect Log")
+
+        return false
+
+    end 
+
+end
+
+function detectLeaves (direction) 
+
+    local blockInfo = ""
+
+    if direction == "front" then
+
+        blockInfo = turtle.inspect()
+
+        print("> Inspected Block in Front")
+
+    elseif direction == "up" then
+
+        blockInfo = turtle.inspectUp()
+
+        print("> Inspected Block Above")
+
+    elseif direction == "down" then
+
+        blockInfo = turtle.inspectDown()
+
+        print("> Inspected Block Below")
+
+    end
+
+    if blockInfo.name == "minecraft:leaves" then 
+
+        print("> Detected Leaves")
+
+        return true
+
+    else
+
+        print("> Did Not Detect Leaves")
+
+        return false
+
+    end 
+end
+
+function chop (direction) 
+
+    if direction == "forward" then
+
+        turtle.dig()
+
+        print("> Chopped Log in Front")
+
+    elseif direction == "up" then
+
+        turtle.digUp()
+
+        print("> Chopped Log Above")
+
+    elseif direction == "down" then
+
+        turtle.digDown()
+
+        print("> Chopped Log Below")
+    else
+
+        print ("> Unknown Direction")
+
+    end
+
+end
+
 function trim (direction) 
 
     if direction == "forward" then
@@ -17,6 +123,30 @@ function trim (direction)
         turtle.digDown()
 
         print("> Trimmed Leaves Below")
+
+    else
+
+        print ("> Unknown Direction")
+
+    end
+
+end
+
+function turn (direction) 
+
+    if direction == "right" then
+
+        turtle.turnRight()
+
+    elseif direction == "left" then
+
+        turtle.turnLeft()
+
+    elseif direction == "around" then 
+
+        turtle.turnRight()
+        turtle.turnRight()
+
     end
 
 end
@@ -100,7 +230,7 @@ function trimAroundTree ()
         end
 
         -- Position for next layer
-        move("forward")
+        traverse("forward")
         turn("left")
 
     until layer == 1
