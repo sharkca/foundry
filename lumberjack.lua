@@ -196,28 +196,33 @@ function trimAroundTree ()
 
     end
 
+    -- Face leaves on right.
     turn("right")
 
-    -- Repeat until layer equals 1
+    -- Repeat until layer is less than 1
     repeat
 
         local perimeter = layer * 8
-        local length = perimeter / 4
+        local sideLength = perimeter / 4
+        local halfSideLength = sideLength / 2
 
-        print("> The length of a side is length:", length)
+        print("> The perimeter of the square is: " .. perimeter)
+        print("> The length of a side: " .. sideLength)
+        print("> The half length of a side: " .. halfSideLength)
 
         -- The first iteration traverse half the length.
-
-        for i=1, length/2 do
+        for i=1, halfSideLength do
 
             trim("front")
             traverse("forward")
 
         end
 
-        -- For the next 3 iterations traverse full length.
+        turn("right")
+
+        -- For the next 3 iterations traverse full length & turn right.
         for i = 1, 3 do
-            for i=1, length do
+            for i = 1, sideLength do
 
                 trim("front")
                 traverse("forward")
@@ -225,19 +230,23 @@ function trimAroundTree ()
             end
 
             turn("right")
+
         end
 
         -- On the last iteration traverse half the length.
-        for i=1, length/2 do
+        for i=1, halfSideLength do
 
             trim("front")
             traverse("forward")
 
         end
 
-        -- Position for next layer
+        -- If there is more than one layer left
+        -- Turn right, move forward, & turn right
+        -- Else turn right
         if layer > 1 then
 
+            turn("right")
             traverse("forward")
             turn("left")
 
@@ -247,7 +256,10 @@ function trimAroundTree ()
 
         end
 
-    until layer == 1
+        -- reduce layer by 1
+        layer = layer - 1
+
+    until layer <= 0
 
     -- Face the log.
     while not detectLog("front") do
