@@ -1,28 +1,28 @@
-function detectLog (direction) 
+function detectLog (direction)
 
     local blockInfo = ""
 
     if direction == "front" then
 
-        blockInfo = turtle.inspect()
+        success, blockInfo = turtle.inspect()
 
         print("> Inspected Block in Front")
 
     elseif direction == "up" then
 
-        blockInfo = turtle.inspectUp()
+        success, blockInfo = turtle.inspectUp()
 
         print("> Inspected Block Above")
 
     elseif direction == "down" then
 
-        blockInfo = turtle.inspectDown()
+        success, blockInfo = turtle.inspectDown()
 
         print("> Inspected Block Below")
 
     end
 
-    if blockInfo.name == "minecraft:log" then 
+    if blockInfo.name == "minecraft:spruce_log" then
 
         print("> Detected Log")
 
@@ -34,35 +34,35 @@ function detectLog (direction)
 
         return false
 
-    end 
+    end
 
 end
 
-function detectLeaves (direction) 
+function detectLeaves (direction)
 
     local blockInfo = ""
 
     if direction == "front" then
 
-        blockInfo = turtle.inspect()
+        success, blockInfo = turtle.inspect()
 
         print("> Inspected Block in Front")
 
     elseif direction == "up" then
 
-        blockInfo = turtle.inspectUp()
+        success, blockInfo = turtle.inspectUp()
 
         print("> Inspected Block Above")
 
     elseif direction == "down" then
 
-        blockInfo = turtle.inspectDown()
+        success, blockInfo = turtle.inspectDown()
 
         print("> Inspected Block Below")
 
     end
 
-    if blockInfo.name == "minecraft:leaves" then 
+    if blockInfo.name == "minecraft:spruce_leaves" then
 
         print("> Detected Leaves")
 
@@ -74,10 +74,10 @@ function detectLeaves (direction)
 
         return false
 
-    end 
+    end
 end
 
-function chop (direction) 
+function chop (direction)
 
     if direction == "forward" then
 
@@ -104,9 +104,9 @@ function chop (direction)
 
 end
 
-function trim (direction) 
+function trim (direction)
 
-    if direction == "forward" then
+    if direction == "front" then
 
         turtle.dig()
 
@@ -132,7 +132,7 @@ function trim (direction)
 
 end
 
-function turn (direction) 
+function turn (direction)
 
     if direction == "right" then
 
@@ -142,7 +142,7 @@ function turn (direction)
 
         turtle.turnLeft()
 
-    elseif direction == "around" then 
+    elseif direction == "around" then
 
         turtle.turnRight()
         turtle.turnRight()
@@ -159,8 +159,8 @@ function traverse (direction)
 
         print("> Moved Forward")
 
-    elseif direction == "back" then 
-        
+    elseif direction == "back" then
+
         turtle.back()
 
         print("> Moved Back")
@@ -180,12 +180,11 @@ function traverse (direction)
 
 end
 
-function trimAroundTree () 
+function trimAroundTree ()
 
     local layer = 1
-    local iteration = 5
 
-    -- Determine total layers. 
+    -- Determine total layers.
     turn("around")
 
     while detectLeaves("front") do
@@ -200,38 +199,53 @@ function trimAroundTree ()
     turn("right")
 
     -- Repeat until layer equals 1
-    repeat 
-        -- Repeat code 5 times
-        for i=1, iteration do
+    repeat
 
-            local perimeter = layer * 8
-            local length = perimeter / 4
+        local perimeter = layer * 8
+        local length = perimeter / 4
 
-            -- The first iteration traverse half the length. 
-            -- For the next 3 iterations traverse full length. 
-            -- On the last iteration traverse half the length. 
-            if (iteration == 1) or (iteration == 5) then
-                for i=1, length/2 do
-                    if detectLeaves("front") then
-                        trim("front")
-                    end
+        print("> The length of a side is length:", length)
 
-                    traverse("forward")
-                end
-            else
-                if detectLeaves("front") then
-                    trim("front")
-                end
+        -- The first iteration traverse half the length.
 
+        for i=1, length/2 do
+
+            trim("front")
+            traverse("forward")
+
+        end
+
+        -- For the next 3 iterations traverse full length.
+        for i = 1, 3 do
+            for i=1, length do
+
+                trim("front")
                 traverse("forward")
+
             end
 
             turn("right")
         end
 
+        -- On the last iteration traverse half the length.
+        for i=1, length/2 do
+
+            trim("front")
+            traverse("forward")
+
+        end
+
         -- Position for next layer
-        traverse("forward")
-        turn("left")
+        if layer > 1 then
+
+            traverse("forward")
+            turn("left")
+
+        else
+
+            turn("right")
+
+        end
 
     until layer == 1
 
@@ -243,17 +257,17 @@ function trimAroundTree ()
     end
 end
 
-// Main
+-- Main
 
 while detectLog("front") do
-    if detectLeaves("up") then 
+    if detectLeaves("up") then
 
         trim("up")
         traverse("up")
 
         trimAroundTree()
 
-    else 
+    else
 
         traverse("up")
 
