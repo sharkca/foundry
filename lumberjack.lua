@@ -260,13 +260,6 @@ function trimAroundTree ()
         layer = layer - 1
 
     until layer <= 0
-
-    -- Face the log.
-    while not detectLog("front") do
-
-        turn("right")
-
-    end
 end
 
 -- Main
@@ -286,10 +279,16 @@ while detectLog("front") do
     end
 end
 
-traverse("forward")
+if detectLeaves("front") then
+
+    trim("front")
+    traverse("forward")
+
+end
 
 while detectLog("down") do
 
     chop("down")
+    traverse("down")
 
 end
