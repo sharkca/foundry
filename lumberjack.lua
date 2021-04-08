@@ -262,33 +262,95 @@ function trimAroundTree ()
     until layer <= 0
 end
 
--- Main
+function processTree ()
+    while detectLog("front") do
+        if detectLeaves("up") then
 
-while detectLog("front") do
-    if detectLeaves("up") then
+            trim("up")
+            traverse("up")
+            trimAroundTree()
 
-        trim("up")
-        traverse("up")
+        else
 
-        trimAroundTree()
+            traverse("up")
 
-    else
+        end
+    end
 
-        traverse("up")
+    if detectLeaves("front") then
+
+        trim("front")
+        traverse("forward")
+
+    end
+
+    while detectLog("down") do
+
+        chop("down")
+        traverse("down")
 
     end
 end
 
-if detectLeaves("front") then
+function replenishFuel () 
 
-    trim("front")
-    traverse("forward")
+    turn("around")
+
+    while not detectChest("front") do
+
+        print("> There isn't a inventory chest.")
+        print("> Pausing for 30 seconds.")
+
+        sleep(30)
+
+    end
+
+    while fuelLevelLow() do
+        if chestContainFuel() then
+
+            refuelFromChest()
+
+        else
+
+            print("> The chest does not contain fuel.")
+            print("> Pausing for 30 seconds.")
+
+            sleep(30)
+
+        end
+    end
+
+    turn("around")
 
 end
 
-while detectLog("down") do
+function plantSapling ()
+    -- After trimming and felling a tree
+    -- And no log exists
+    -- Plant a sapling. 
+end
 
-    chop("down")
-    traverse("down")
+function dumpInventory ()
+    -- After trimming, felling, & planting
+    -- Dump inventory into chest. 
+end
 
+-- Main
+
+while lumberJack() do
+    if fuelLevelLow() then
+
+        replenishFuel()
+
+    end
+
+    if treeHasGrown() then
+
+        processTree()
+
+        plantSapling()
+
+        dumpInventory()
+
+    end
 end
