@@ -1,4 +1,10 @@
-function detectLog (direction)
+local log       = "minecraft:spruce_log"
+local chest     = "minecraft:chest"
+local leaves    = "minecraft:spruce_leaves"
+
+-- Block Detection
+
+function detect (block, direction)
 
     local blockInfo = ""
 
@@ -6,76 +12,34 @@ function detectLog (direction)
 
         success, blockInfo = turtle.inspect()
 
-        print("> Inspected Block in Front")
-
     elseif direction == "up" then
 
         success, blockInfo = turtle.inspectUp()
-
-        print("> Inspected Block Above")
 
     elseif direction == "down" then
 
         success, blockInfo = turtle.inspectDown()
 
-        print("> Inspected Block Below")
-
     end
 
-    if blockInfo.name == "minecraft:spruce_log" then
+    print("> Inspected Block: " .. direction)
 
-        print("> Detected Log")
+    if blockInfo.name == block then
+
+        print("> Detected: " .. block)
 
         return true
 
     else
 
-        print("> Did Not Detect Log")
-
-        return false
-
-    end
-
-end
-
-function detectLeaves (direction)
-
-    local blockInfo = ""
-
-    if direction == "front" then
-
-        success, blockInfo = turtle.inspect()
-
-        print("> Inspected Block in Front")
-
-    elseif direction == "up" then
-
-        success, blockInfo = turtle.inspectUp()
-
-        print("> Inspected Block Above")
-
-    elseif direction == "down" then
-
-        success, blockInfo = turtle.inspectDown()
-
-        print("> Inspected Block Below")
-
-    end
-
-    if blockInfo.name == "minecraft:spruce_leaves" then
-
-        print("> Detected Leaves")
-
-        return true
-
-    else
-
-        print("> Did Not Detect Leaves")
+        print("> Did Not Detect: " .. block)
 
         return false
 
     end
 end
+
+-- Action
 
 function chop (direction)
 
@@ -180,6 +144,8 @@ function traverse (direction)
 
 end
 
+-- Tree Processing 
+
 function trimAroundTree ()
 
     local layer = 1
@@ -187,7 +153,7 @@ function trimAroundTree ()
     -- Determine total layers.
     turn("around")
 
-    while detectLeaves("front") do
+    while detect(leaves, "front") do
 
         trim("front")
         traverse("forward")
@@ -263,8 +229,8 @@ function trimAroundTree ()
 end
 
 function processTree ()
-    while detectLog("front") do
-        if detectLeaves("up") then
+    while detect(log, "front") do
+        if detect(leaves, "up") then
 
             trim("up")
             traverse("up")
@@ -277,14 +243,14 @@ function processTree ()
         end
     end
 
-    if detectLeaves("front") then
+    if detect(leaves, "front") then
 
         trim("front")
         traverse("forward")
 
     end
 
-    while detectLog("down") do
+    while detect(log, "down") do
 
         chop("down")
         traverse("down")
@@ -296,7 +262,7 @@ function replenishFuel ()
 
     turn("around")
 
-    while not detectChest("front") do
+    while not detect(chest, "front") do
 
         print("> There isn't a inventory chest.")
         print("> Pausing for 30 seconds.")
