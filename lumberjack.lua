@@ -2,7 +2,7 @@ local log       = "minecraft:spruce_log"
 local chest     = "minecraft:chest"
 local leaves    = "minecraft:spruce_leaves"
 
--- Block Detection
+-- Block 
 
 function detect (block, direction)
 
@@ -39,65 +39,27 @@ function detect (block, direction)
     end
 end
 
--- Action
-
-function chop (direction)
-
+function harvest (action, direction)
     if direction == "forward" then
 
         turtle.dig()
 
-        print("> Chopped Log in Front")
-
     elseif direction == "up" then
 
         turtle.digUp()
-
-        print("> Chopped Log Above")
 
     elseif direction == "down" then
 
         turtle.digDown()
 
-        print("> Chopped Log Below")
-    else
-
-        print ("> Unknown Direction")
-
     end
 
+    print("> " .. action .. " " .. direction)
 end
 
-function trim (direction)
-
-    if direction == "front" then
-
-        turtle.dig()
-
-        print("> Trimmed Leaves in Front")
-
-    elseif direction == "up" then
-
-        turtle.digUp()
-
-        print("> Trimmed Leaves Above")
-
-    elseif direction == "down" then
-
-        turtle.digDown()
-
-        print("> Trimmed Leaves Below")
-
-    else
-
-        print ("> Unknown Direction")
-
-    end
-
-end
+-- Movement
 
 function turn (direction)
-
     if direction == "right" then
 
         turtle.turnRight()
@@ -112,39 +74,39 @@ function turn (direction)
         turtle.turnRight()
 
     end
-
 end
 
 function traverse (direction)
-
     if direction == "forward" then
 
         turtle.forward()
-
-        print("> Moved Forward")
 
     elseif direction == "back" then
 
         turtle.back()
 
-        print("> Moved Back")
-
     elseif direction == "up" then
 
         turtle.up()
-
-        print("> Moved Up")
 
     elseif direction == "down" then
 
         turtle.down()
 
-        print("> Moved Down")
     end
-
+    
+    print("> Moved " .. direction)
 end
 
 -- Tree Processing 
+
+function chop (direction)
+    harvest("chop", direction)
+end
+
+function trim (direction)
+    harvest("trim", direction)
+end
 
 function trimAroundTree ()
 
