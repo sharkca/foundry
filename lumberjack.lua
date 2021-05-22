@@ -1,6 +1,11 @@
+-- Every function that can be reused
+-- Should be placed in a file of it's own. 
+
 local log       = "minecraft:spruce_log"
 local chest     = "minecraft:chest"
 local leaves    = "minecraft:spruce_leaves"
+local sapling   = "minecraft:spruce_sapling"
+local charcol   = "minecraft:charcoal"
 
 -- Block 
 
@@ -234,9 +239,11 @@ function replenishFuel ()
     end
 
     while fuelLevelLow() do
-        if chestContainFuel() then
+        if chestContains(charcoal) then
 
-            refuelFromChest()
+            retrieveFromChest(charcoal, 30)
+
+            refuelTurtle(charcoal, 30)
 
         else
 
@@ -253,14 +260,58 @@ function replenishFuel ()
 end
 
 function plantSapling ()
+    
     -- After trimming and felling a tree
-    -- And no log exists
+    -- Check if log exists in front plot,
+    while detect(log, "front") do
+
+        print("> Can't plant sapling. Log in the way.")
+        print("> Pausing for 30 seconds.")
+
+        sleep(30)
+
+    end
+
+    turn("around")
+
+    -- Check if chest exists in front,
+    while not detect(chest, "front") do
+
+        print("> There isn't a inventory chest.")
+        print("> Pausing for 30 seconds.")
+
+        sleep(30)
+
+    end
+
+    -- Check if sapling exists in chest
+    while not inventoryContain(sapling) do
+        if chestContains(sapling); then
+
+            retrieveFromChest(sapling, 1)
+
+        else
+
+            print("> No sapling in chest.")
+            print("> Pausing for 30 seconds")
+
+            sleep(30)
+
+        end
+    end
+
+    turn("around")
+
     -- Plant a sapling. 
+    plant(sapling)
+    
+    print("> Planted Sapling")
 end
 
-function dumpInventory ()
-    -- After trimming, felling, & planting
-    -- Dump inventory into chest. 
+-- After trimming, felling, & planting
+-- Dump inventory into chest. 
+function dumpHarvest ()
+    
 end
 
 -- Main
@@ -278,7 +329,7 @@ while lumberJack() do
 
         plantSapling()
 
-        dumpInventory()
+        dumpHarvest()
 
     end
 end
