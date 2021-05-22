@@ -195,7 +195,7 @@ function trimAroundTree ()
     until layer <= 0
 end
 
-function processTree ()
+function harvestTree ()
     while detect(log, "front") do
         if detect(leaves, "up") then
 
@@ -261,8 +261,6 @@ end
 
 function plantSapling ()
     
-    -- After trimming and felling a tree
-    -- Check if log exists in front plot,
     while detect(log, "front") do
 
         print("> Can't plant sapling. Log in the way.")
@@ -274,7 +272,6 @@ function plantSapling ()
 
     turn("around")
 
-    -- Check if chest exists in front,
     while not detect(chest, "front") do
 
         print("> There isn't a inventory chest.")
@@ -284,7 +281,6 @@ function plantSapling ()
 
     end
 
-    -- Check if sapling exists in chest
     while not inventoryContain(sapling) do
         if chestContains(sapling); then
 
@@ -308,10 +304,25 @@ function plantSapling ()
     print("> Planted Sapling")
 end
 
--- After trimming, felling, & planting
--- Dump inventory into chest. 
 function dumpHarvest ()
+
+    turn("around")
     
+    while not detect(chest, "front") do
+
+        print("> There isn't a inventory chest.")
+        print("> Pausing for 30 seconds.")
+
+        sleep(30)
+
+    end
+
+    dropInventorySlots(1, 16)
+    
+    print("> Dropping items in slots 1-16")
+
+    turn("around")
+
 end
 
 -- Main
@@ -325,7 +336,7 @@ while lumberJack() do
 
     if treeHasGrown() then
 
-        processTree()
+        harvestTree()
 
         plantSapling()
 
