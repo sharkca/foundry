@@ -1,7 +1,9 @@
+local harvest = require "library.harvest"
+
 chop = {}
 
-function chop.forward()
-    harvest.forward()
+function chop.front()
+    harvest.front()
 end
 
 function chop.up()

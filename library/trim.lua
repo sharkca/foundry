@@ -1,4 +1,4 @@
-local harvest = require "library.turtle.harvest"
+local harvest = require "library.harvest"
 
 trim = {}
 
