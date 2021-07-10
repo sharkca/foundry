@@ -12,6 +12,8 @@ function tree.hasGrown (log)
 end
 
 function tree.fell (log, leaves)
+    
+    local height = 0
 
     while detect.front(log) do
 
@@ -25,7 +27,11 @@ function tree.fell (log, leaves)
 
         traverse.up()
 
+        height = height + 1
+
     end
+
+    traverse.down(height)
 
 end
 
