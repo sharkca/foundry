@@ -5,10 +5,14 @@ local spruceLeaves  = "minecraft:spruce_leaves"
 
 function main () 
 
-    if tree.hasGrown(spruceLog) then
+    while true do
 
-        tree.fell(spruceLog, spruceLeaves)
-        
+        if tree.hasGrown(spruceLog) then
+
+            tree.fell(spruceLog, spruceLeaves)
+            
+        end
+
     end
 
 end
