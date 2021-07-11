@@ -2,7 +2,7 @@ detect = {}
 
 local blockInfo = ""
 
-function compareBlock (block, blockInfo) 
+local function compareBlock (block, blockInfo) 
 
     if blockInfo.name == block then
 
