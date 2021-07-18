@@ -1,12 +1,12 @@
 inventory = {}
 
-function inventory.slot.select (slot)
+function inventory.slotSelect (slot)
     
     turtle.select(slot)
 
 end
 
-function inventory.slot.contains (item) 
+function inventory.slotContains (item) 
 
     local itemInfo = turtle.getItemDetail()
 

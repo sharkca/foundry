@@ -1,10 +1,10 @@
-local day.seconds = 86400
+local secondsInDay = 1200
 
 sleep = {}
 
 function sleep.days (days)
 
-    os.sleep(day.seconds * days)
+    os.sleep(secondsInDay * days)
 
 end
 

@@ -13,7 +13,9 @@ function farm.harvest (crop, seed)
 
         harvest.down()
 
-        plant.crop.down(seed)
+        turtle.suckDown()
+
+        plant.crop(seed)
         
         traverse.forward()
 
@@ -21,7 +23,7 @@ function farm.harvest (crop, seed)
 
     end
 
-    traverse.back(distance)
+    traverse.backward(distance)
         
 end
 

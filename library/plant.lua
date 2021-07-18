@@ -2,28 +2,28 @@ local inventory = require "library.inventory"
 
 plant = {}
 
-function plant.crop.down ()
+function plant.crop (seed)
 
-    inventory.slot.select(1)
+    inventory.slotSelect(1)
 
-    if inventory.slot.contains(seed) then
+    if inventory.slotContains(seed) then
 
-        turtle.place()
+        turtle.placeDown()
 
     end
 end
 
 function plant.sapling (sapling)
 
-    inventory.slot.select(2)
+    inventory.slotSelect(2)
 
-    if inventory.slot.contains(sapling) then
+    if inventory.slotContains(sapling) then
 
         turtle.place()
 
     end
 
-    inventory.slot.select(1)
+    inventory.slotSelect(1)
 
 end
 
