@@ -1,6 +1,5 @@
-local plant     = require "library.plant"
+local plot      = require "library.plot"
 local detect    = require "library.detect"
-local harvest   = require "library.harvest"
 local traverse  = require "library.traverse"
 
 farm = {}
@@ -11,12 +10,8 @@ function farm.harvest (crop, seed)
 
     while detect.down(crop) do
 
-        harvest.down()
-
-        turtle.suckDown()
-
-        plant.crop(seed)
-        
+        plot.harvest(seed)
+    
         traverse.forward()
 
         distance = distance + 1
