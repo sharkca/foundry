@@ -1,4 +1,5 @@
-local turn = require "library.turn"
+local turn       = require "library.turn"
+local coordinate = require "library.coordinate"
 
 local traverse = {}
 
@@ -16,6 +17,8 @@ local function traverse.forward (iterations)
         
     end
 
+    coordinate.forward()
+
 end
 
 local function traverse.backward (iterations)
@@ -31,6 +34,8 @@ local function traverse.backward (iterations)
         turtle.back()
 
     end
+
+    coordinate.backward()
 
 end
 
@@ -63,7 +68,7 @@ local function traverse.down (iterations)
         turtle.down()
 
     end
-
+    
 end
 
 local traverse.uTurn = {}
@@ -74,6 +79,8 @@ local function traverse.uTurn.right ()
     traverse.forward()
     turn.right()
 
+    coordinate.flip()
+
 end
 
 local function traverse.uTurn.left ()
@@ -81,6 +88,8 @@ local function traverse.uTurn.left ()
     turn.left()
     traverse.forward()
     turn.left()
+
+    coordinate.flip()
 
 end
 
